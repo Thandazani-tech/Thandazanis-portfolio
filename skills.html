@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills — Thandazani Dlamini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="node-dot"></span>Thandazani <span class="accent">Dlamini</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-page="index.html">Home</a></li>
+      <li><a href="background.html" data-page="background.html">Background</a></li>
+      <li><a href="projects.html" data-page="projects.html">Projects</a></li>
+      <li><a href="skills.html" data-page="skills.html">Skills</a></li>
+      <li><a href="posts.html" data-page="posts.html">Posts</a></li>
+      <li><a href="contact.html" data-page="contact.html">Get in Touch</a></li>
+      <li><a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener" class="github-btn">GitHub ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="wrap page-head">
+    <span class="eyebrow">Skills</span>
+    <h1>What I bring to the table.</h1>
+    <p>Rated honestly, not inflated — updated live from my content editor.</p>
+  </div>
+
+  <section class="wrap">
+    <div class="skills-tabs" role="tablist" aria-label="Filter skills by category">
+      <button class="active" data-target="all">All</button>
+      <button data-target="networking">Networking &amp; Systems</button>
+      <button data-target="programming">Programming</button>
+      <button data-target="tools">Tools &amp; Platforms</button>
+    </div>
+
+    <div class="skill-group" data-category="networking">
+      <div class="skill-group-title">Networking &amp; Systems</div>
+
+      <div class="skill-rows" data-category="networking">
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Networking Fundamentals (TCP/IP, OSI Model)</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Subnetting &amp; IP Addressing</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Routing &amp; Switching (Cisco Packet Tracer)</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Linux Administration</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Windows Server</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="skill-group" data-category="programming">
+      <div class="skill-group-title">Programming Languages</div>
+
+      <div class="skill-rows" data-category="programming">
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Python</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Java</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">C#</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">HTML / CSS</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">JavaScript</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">SQL</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="skill-group" data-category="tools">
+      <div class="skill-group-title">Tools &amp; Platforms</div>
+
+      <div class="skill-rows" data-category="tools">
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Git &amp; GitHub</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Wireshark</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">VS Code</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+
+      <div class="skill-row" data-level="0">
+        <div class="skill-row-head"><span class="skill-name">Microsoft Office / Google Workspace</span><span class="skill-pct mono">0%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 Thandazani Dlamini. Built from scratch.</p>
+    <div class="footer-links">
+      <a href="contact.html">Get in Touch</a>
+      <a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// Live skill levels from Firestore — updates every row's bar + %
+// whenever the levels change (no page reload needed).
+PortfolioDB.skills.watch(levels => {
+  document.querySelectorAll('.skill-row').forEach(row => {
+    const name = row.querySelector('.skill-name').textContent.trim();
+    const level = levels[name] ?? 0;
+    row.dataset.level = level;
+    row.querySelector('.skill-bar-fill').style.width = level + '%';
+    row.querySelector('.skill-pct').textContent = level + '%';
+  });
+});
+</script>
+</body>
+</html>

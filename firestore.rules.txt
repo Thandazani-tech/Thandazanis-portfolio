@@ -1,0 +1,38 @@
+/* ============================================================
+   FIRESTORE SECURITY RULES
+   ============================================================
+   This file is just a reference — Firestore rules live in the
+   Firebase Console, not in your website's files. Copy everything
+   below and paste it into:
+
+   Firebase Console → (your project) → Build → Firestore Database
+   → Rules tab → replace the contents → Publish
+
+   What this does:
+   - Anyone visiting your site can READ projects, posts and skills
+     (so your live pages work for every visitor).
+   - Only a signed-in user (you, via admin.html) can WRITE
+     (add/delete a project or post, change a skill level).
+   ============================================================ */
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /projects/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /posts/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /skills/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+  }
+}

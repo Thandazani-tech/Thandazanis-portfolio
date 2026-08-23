@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thandazani Dlamini — ICT Student, Networking</title>
+<meta name="description" content="Thandazani Dlamini — Bachelor of ICT student specialising in Networking. Portfolio, background, skills and projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="node-dot"></span>Thandazani <span class="accent">Dlamini</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-page="index.html">Home</a></li>
+      <li><a href="background.html" data-page="background.html">Background</a></li>
+      <li><a href="projects.html" data-page="projects.html">Projects</a></li>
+      <li><a href="skills.html" data-page="skills.html">Skills</a></li>
+      <li><a href="posts.html" data-page="posts.html">Posts</a></li>
+      <li><a href="contact.html" data-page="contact.html">Get in Touch</a></li>
+      <!-- TODO: replace # with your real GitHub profile URL -->
+      <li><a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener" class="github-btn">GitHub ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero wrap">
+    <div>
+      <span class="hero-status"><span class="pulse"></span>Open to opportunities</span>
+      <h1>Hi, I'm <span class="accent">Thandazani</span><br>Dlamini.</h1>
+      <p class="role mono">&gt; BINCT Student</p>
+      <p class="lede">"I'm a BINCT student passionate about computer networking, IT infrastructure, and exploring how technology connects people and systems."</p>
+      <div class="hero-actions">
+        <a href="background.html" class="btn btn-primary">View My Background</a>
+        <a href="projects.html" class="btn btn-ghost">See Projects</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-wrap">
+      <svg class="node-ring" viewBox="0 0 400 400" aria-hidden="true">
+        <circle class="orbit-path" cx="200" cy="200" r="190"/>
+        <circle class="node" cx="200" cy="10" r="4"/>
+        <circle class="node c2" cx="390" cy="200" r="3.5"/>
+        <circle class="node" cx="200" cy="390" r="3"/>
+        <circle class="node c2" cx="10" cy="200" r="4"/>
+        <circle class="node" cx="65" cy="65" r="3"/>
+        <circle class="node c2" cx="335" cy="335" r="3"/>
+      </svg>
+      <div class="hero-photo">
+        <img src="assets/thandazani.jpg" alt="Thandazani Dlamini">
+        <div class="hero-tag">
+          <span>NODE // T.DLAMINI</span>
+          <span class="ip">STATUS: 200 OK</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What I do</span>
+      <h2 class="section-title">Where I focus</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card info-card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v6M12 13l-6 4M12 13l6 4"/></svg>
+        </div>
+        <div>
+          <h3>Networking</h3>
+          <p>Routing, switching, subnetting and network design — building infrastructure that stays online and stays secure.</p>
+        </div>
+      </div>
+      <div class="card info-card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <div>
+          <h3>Systems &amp; Scripting</h3>
+          <p>Linux administration and scripting to automate the repetitive stuff — backups, monitoring, setup.</p>
+        </div>
+      </div>
+      <div class="card info-card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        </div>
+        <div>
+          <h3>Software Development</h3>
+          <p>Comfortable across the fundamentals — from clean front-ends to the logic that runs behind them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 Thandazani Dlamini. Built from scratch.</p>
+    <div class="footer-links">
+      <a href="contact.html">Get in Touch</a>
+      <a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

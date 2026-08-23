@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Editor — Thandazani Dlamini Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<style>
+  .admin-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11.5px;
+    color:var(--violet); background:var(--violet-soft);
+    border:1px solid rgba(139,107,255,0.3);
+    padding:6px 12px; border-radius:999px;
+    margin-bottom:18px;
+  }
+  .admin-tabs{ display:flex; gap:10px; margin-bottom:36px; flex-wrap:wrap; }
+  .admin-tabs button{
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em; text-transform:uppercase;
+    background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    padding:10px 18px; border-radius:999px; cursor:pointer; transition:all .15s ease;
+  }
+  .admin-tabs button:hover{ color:var(--text); border-color:var(--cyan); }
+  .admin-tabs button.active{ background:var(--violet); border-color:var(--violet); color:#fff; }
+  .admin-panel{ display:none; }
+  .admin-panel.active{ display:block; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:700px){ .field-row{ grid-template-columns:1fr; } }
+  .item-list{ margin-top:32px; display:flex; flex-direction:column; gap:14px; }
+  .item-row{
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:16px 20px;
+  }
+  .item-row .item-info h4{ font-family:var(--font-body); font-size:15.5px; font-weight:600; margin:0; }
+  .item-row .item-info p{ color:var(--muted-2); font-size:13px; margin:4px 0 0; }
+  .icon-btn{
+    background:var(--surface-2); border:1px solid var(--border); color:var(--muted);
+    width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:14px; flex-shrink:0;
+  }
+  .icon-btn.danger:hover{ border-color:#ff6b6b; color:#ff6b6b; }
+  .empty-hint{ color:var(--muted-2); font-size:14px; padding:24px 0; text-align:center; }
+  .skill-edit-row{ margin-bottom:22px; }
+  .skill-edit-head{ display:flex; justify-content:space-between; margin-bottom:8px; }
+  .skill-edit-head .name{ font-weight:600; font-size:14.5px; }
+  .skill-edit-head .val{ font-family:var(--font-mono); color:var(--cyan); font-size:13px; }
+  input[type="range"]{
+    -webkit-appearance:none; width:100%; height:7px; border-radius:999px;
+    background:var(--surface-2); border:1px solid var(--border); outline:none;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--violet); border:2px solid #fff; cursor:pointer; margin-top:-1px;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%;
+    background:var(--violet); border:2px solid #fff; cursor:pointer;
+  }
+  .toast{
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--cyan); color:var(--bg); font-weight:600; font-size:14px;
+    padding:14px 24px; border-radius:10px; opacity:0; pointer-events:none;
+    transition:all .25s ease; z-index:999;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .toast.error{ background:#ff6b6b; }
+  #login-screen{ max-width:420px; margin:80px auto; }
+  #app-screen{ display:none; }
+  .signed-in-bar{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:28px; flex-wrap:wrap; gap:10px;
+  }
+  .signed-in-bar .who{ font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="node-dot"></span>Thandazani <span class="accent">Dlamini</span></a>
+    <span style="font-family:var(--font-mono); font-size:12px; color:var(--muted-2);">/ content editor</span>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap" style="padding-top:56px;">
+
+    <!-- ============ LOGIN SCREEN ============ -->
+    <div id="login-screen">
+      <span class="admin-badge">🔒 Admin only</span>
+      <h1 style="margin-bottom:24px;">Sign in</h1>
+      <div class="card">
+        <div class="form-field">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="doSignIn()">Sign In</button>
+        <p class="form-note">This account was created for you in the Firebase console — see the setup guide for how to add it.</p>
+      </div>
+    </div>
+
+    <!-- ============ APP SCREEN (after login) ============ -->
+    <div id="app-screen">
+      <div class="signed-in-bar">
+        <div>
+          <span class="admin-badge">🔒 Live editor</span>
+          <h1>Content Editor</h1>
+        </div>
+        <div>
+          <span class="who" id="who-label"></span>
+          <button class="btn btn-ghost" onclick="doSignOut()" style="margin-left:12px;">Sign Out</button>
+        </div>
+      </div>
+      <p style="color:var(--muted); margin-bottom:36px; max-width:60ch;">Changes here save straight to the database and appear on your live site immediately — no file downloads, no re-uploading.</p>
+
+      <div class="admin-tabs">
+        <button class="active" data-panel="panel-projects">Projects</button>
+        <button data-panel="panel-posts">Posts</button>
+        <button data-panel="panel-skills">Skills</button>
+      </div>
+
+      <!-- ============ PROJECTS ============ -->
+      <div id="panel-projects" class="admin-panel active">
+        <div class="card">
+          <h3 style="margin-bottom:20px;">Add a project</h3>
+          <div class="field-row">
+            <div class="form-field">
+              <label for="p-title">Project title</label>
+              <input type="text" id="p-title" placeholder="e.g. Subnet Calculator">
+            </div>
+            <div class="form-field">
+              <label for="p-thumb">Thumbnail label</label>
+              <input type="text" id="p-thumb" placeholder="e.g. TOOL // SUBNET-CALC">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="p-desc">Description</label>
+            <textarea id="p-desc" rows="3" placeholder="One or two sentences on what it does and why you built it."></textarea>
+          </div>
+          <div class="field-row">
+            <div class="form-field">
+              <label for="p-tags">Tags (comma separated)</label>
+              <input type="text" id="p-tags" placeholder="e.g. Python, Networking">
+            </div>
+            <div class="form-field">
+              <label for="p-github">GitHub link</label>
+              <input type="text" id="p-github" placeholder="https://github.com/Thandazani-tech/repo">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="p-live">Live / write-up link (optional)</label>
+            <input type="text" id="p-live" placeholder="https://...">
+          </div>
+          <button class="btn btn-primary" onclick="addProject()">+ Add Project</button>
+        </div>
+        <div class="item-list" id="projects-list"></div>
+      </div>
+
+      <!-- ============ POSTS ============ -->
+      <div id="panel-posts" class="admin-panel">
+        <div class="card">
+          <h3 style="margin-bottom:20px;">Add a post</h3>
+          <div class="field-row">
+            <div class="form-field">
+              <label for="post-title">Post title</label>
+              <input type="text" id="post-title" placeholder="e.g. Subnetting, Explained Simply">
+            </div>
+            <div class="form-field">
+              <label for="post-date">Date label</label>
+              <input type="text" id="post-date" placeholder="e.g. Aug 2026">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="post-excerpt">Excerpt</label>
+            <textarea id="post-excerpt" rows="3" placeholder="A short summary of what the post covers."></textarea>
+          </div>
+          <div class="form-field">
+            <label for="post-link">Read-more link (optional)</label>
+            <input type="text" id="post-link" placeholder="https://...">
+          </div>
+          <button class="btn btn-primary" onclick="addPost()">+ Add Post</button>
+        </div>
+        <div class="item-list" id="posts-list"></div>
+      </div>
+
+      <!-- ============ SKILLS ============ -->
+      <div id="panel-skills" class="admin-panel">
+        <div class="card">
+          <h3 style="margin-bottom:6px;">Set your skill levels</h3>
+          <p style="color:var(--muted); font-size:14px; margin-bottom:28px;">Drag a slider — it saves automatically and updates your live Skills page right away.</p>
+          <div id="skills-editor"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+<script>
+function escapeHtml(str){
+  return (str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function showToast(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => { t.classList.remove('show'); }, 2400);
+}
+
+// ============================================================
+// Auth gating
+// ============================================================
+function doSignIn(){
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) { showToast('Enter your email and password', true); return; }
+  PortfolioDB.signIn(email, password)
+    .catch(err => showToast(err.message, true));
+}
+function doSignOut(){ PortfolioDB.signOutUser(); }
+
+PortfolioDB.onAuthChange(user => {
+  if (user) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    document.getElementById('who-label').textContent = 'Signed in as ' + user.email;
+    startLiveData();
+  } else {
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('app-screen').style.display = 'none';
+  }
+});
+
+// ============================================================
+// Tabs
+// ============================================================
+document.querySelectorAll('.admin-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).classList.add('active');
+  });
+});
+
+let liveDataStarted = false;
+function startLiveData(){
+  if (liveDataStarted) return;
+  liveDataStarted = true;
+
+  // ---------------- Projects ----------------
+  PortfolioDB.projects.list(items => {
+    const list = document.getElementById('projects-list');
+    if (!items.length){ list.innerHTML = '<p class="empty-hint">No projects yet — use the form above.</p>'; return; }
+    list.innerHTML = items.map(p => `
+      <div class="item-row">
+        <div class="item-info"><h4>${escapeHtml(p.title)}</h4><p>${escapeHtml((p.tags||[]).join(', '))}</p></div>
+        <div class="item-actions"><button class="icon-btn danger" onclick="removeProject('${p.id}')" title="Delete">✕</button></div>
+      </div>`).join('');
+  });
+
+  // ---------------- Posts ----------------
+  PortfolioDB.posts.list(items => {
+    const list = document.getElementById('posts-list');
+    if (!items.length){ list.innerHTML = '<p class="empty-hint">No posts yet — use the form above.</p>'; return; }
+    list.innerHTML = items.map(p => `
+      <div class="item-row">
+        <div class="item-info"><h4>${escapeHtml(p.title)}</h4><p>${escapeHtml(p.date)}</p></div>
+        <div class="item-actions"><button class="icon-btn danger" onclick="removePost('${p.id}')" title="Delete">✕</button></div>
+      </div>`).join('');
+  });
+
+  // ---------------- Skills ----------------
+  PortfolioDB.skills.watch(levels => renderSkillsEditor(levels));
+}
+
+// ============================================================
+// PROJECTS
+// ============================================================
+function addProject(){
+  const title = document.getElementById('p-title').value.trim();
+  if (!title) { showToast('Add a project title first', true); return; }
+  const tags = document.getElementById('p-tags').value.split(',').map(t => t.trim()).filter(Boolean);
+  PortfolioDB.projects.add({
+    title,
+    thumb: document.getElementById('p-thumb').value.trim() || 'PROJECT',
+    desc: document.getElementById('p-desc').value.trim(),
+    tags,
+    github: document.getElementById('p-github').value.trim(),
+    live: document.getElementById('p-live').value.trim()
+  }).then(() => {
+    ['p-title','p-thumb','p-desc','p-tags','p-github','p-live'].forEach(id => document.getElementById(id).value = '');
+    showToast('Project added — live on your site now');
+  }).catch(err => showToast(err.message, true));
+}
+function removeProject(id){
+  PortfolioDB.projects.remove(id).then(() => showToast('Project removed')).catch(err => showToast(err.message, true));
+}
+
+// ============================================================
+// POSTS
+// ============================================================
+function addPost(){
+  const title = document.getElementById('post-title').value.trim();
+  if (!title) { showToast('Add a post title first', true); return; }
+  PortfolioDB.posts.add({
+    title,
+    date: document.getElementById('post-date').value.trim() || 'Draft',
+    excerpt: document.getElementById('post-excerpt').value.trim(),
+    link: document.getElementById('post-link').value.trim()
+  }).then(() => {
+    ['post-title','post-date','post-excerpt','post-link'].forEach(id => document.getElementById(id).value = '');
+    showToast('Post added — live on your site now');
+  }).catch(err => showToast(err.message, true));
+}
+function removePost(id){
+  PortfolioDB.posts.remove(id).then(() => showToast('Post removed')).catch(err => showToast(err.message, true));
+}
+
+// ============================================================
+// SKILLS — must exactly match the skill names in skills.html
+// ============================================================
+const skillCategories = [
+  { key: 'networking', label: 'Networking & Systems', skills: [
+    'Networking Fundamentals (TCP/IP, OSI Model)',
+    'Subnetting & IP Addressing',
+    'Routing & Switching (Cisco Packet Tracer)',
+    'Linux Administration',
+    'Windows Server'
+  ]},
+  { key: 'programming', label: 'Programming', skills: [
+    'Python', 'Java', 'C#', 'HTML / CSS', 'JavaScript', 'SQL'
+  ]},
+  { key: 'tools', label: 'Tools & Platforms', skills: [
+    'Git & GitHub', 'Wireshark', 'VS Code', 'Microsoft Office / Google Workspace'
+  ]}
+];
+
+let skillsEditorBuilt = false;
+function renderSkillsEditor(levels){
+  const container = document.getElementById('skills-editor');
+  if (!skillsEditorBuilt) {
+    container.innerHTML = skillCategories.map(cat => `
+      <div class="skill-group-title" style="margin-top:24px;">${escapeHtml(cat.label)}</div>
+      ${cat.skills.map(name => {
+        const id = 'sk-' + cat.key + '-' + name.replace(/[^a-z0-9]/gi,'-').toLowerCase();
+        return `
+        <div class="skill-edit-row">
+          <div class="skill-edit-head">
+            <span class="name">${escapeHtml(name)}</span>
+            <span class="val mono" id="${id}-val">0%</span>
+          </div>
+          <input type="range" min="0" max="100" value="0" id="${id}" data-skill="${escapeHtml(name)}">
+        </div>`;
+      }).join('')}
+    `).join('');
+
+    container.querySelectorAll('input[type=range]').forEach(input => {
+      let debounceTimer;
+      input.addEventListener('input', () => {
+        const name = input.dataset.skill;
+        const val = input.value;
+        document.getElementById(input.id + '-val').textContent = val + '%';
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          PortfolioDB.skills.setLevel(name, parseInt(val, 10))
+            .catch(err => showToast(err.message, true));
+        }, 250);
+      });
+    });
+    skillsEditorBuilt = true;
+  }
+
+  // Sync slider positions with whatever is currently in the database
+  skillCategories.forEach(cat => cat.skills.forEach(name => {
+    const id = 'sk-' + cat.key + '-' + name.replace(/[^a-z0-9]/gi,'-').toLowerCase();
+    const el = document.getElementById(id);
+    if (el && document.activeElement !== el) {
+      const val = levels[name] ?? 0;
+      el.value = val;
+      document.getElementById(id + '-val').textContent = val + '%';
+    }
+  }));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get in Touch — Thandazani Dlamini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="node-dot"></span>Thandazani <span class="accent">Dlamini</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-page="index.html">Home</a></li>
+      <li><a href="background.html" data-page="background.html">Background</a></li>
+      <li><a href="projects.html" data-page="projects.html">Projects</a></li>
+      <li><a href="skills.html" data-page="skills.html">Skills</a></li>
+      <li><a href="posts.html" data-page="posts.html">Posts</a></li>
+      <li><a href="contact.html" data-page="contact.html">Get in Touch</a></li>
+      <li><a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener" class="github-btn">GitHub ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="wrap page-head">
+    <span class="eyebrow">Get in touch</span>
+    <h1>Let's connect.</h1>
+    <p>Whether it's an opportunity, a project, or just a question about networking — reach out. I reply as quickly as I can.</p>
+  </div>
+
+  <section class="wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="label">Phone</div>
+            <a class="value" href="tel:+27795324145">079 532 4145</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="label">Email</div>
+            <a class="value" href="mailto:zimelethandazani256@gmail.com">zimelethandazani256@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="label">Location</div>
+            <span class="value">Mtubatuba, KwaZulu-Natal<br>PO Box 803, 2925</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v6M12 13l-6 4M12 13l6 4"/></svg>
+          </div>
+          <div>
+            <div class="label">GitHub</div>
+            <!-- TODO: replace # with your real GitHub profile URL -->
+            <a class="value" href="https://github.com/Thandazani-tech" target="_blank" rel="noopener">github.com/Thandazani-tech ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:20px;">Send a message</h3>
+        <!--
+          This form posts to FormSubmit — a free service that emails
+          submissions straight to your inbox with no backend needed.
+          The first time someone submits it, FormSubmit sends YOU a
+          confirmation email to activate it. See the setup note below
+          the form for details.
+        -->
+        <form action="https://formsubmit.co/zimelethandazani256@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New message from your portfolio site">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required placeholder="Full name">
+          </div>
+          <div class="form-field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com">
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Hi Thandazani, I'd like to talk about..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        </form>
+        <p class="form-note">First submission note: FormSubmit will email you a one-time confirmation link before messages start arriving — click it once to activate the form.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 Thandazani Dlamini. Built from scratch.</p>
+    <div class="footer-links">
+      <a href="contact.html">Get in Touch</a>
+      <a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

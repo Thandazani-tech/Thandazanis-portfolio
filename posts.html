@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posts — Thandazani Dlamini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="node-dot"></span>Thandazani <span class="accent">Dlamini</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-page="index.html">Home</a></li>
+      <li><a href="background.html" data-page="background.html">Background</a></li>
+      <li><a href="projects.html" data-page="projects.html">Projects</a></li>
+      <li><a href="skills.html" data-page="skills.html">Skills</a></li>
+      <li><a href="posts.html" data-page="posts.html">Posts</a></li>
+      <li><a href="contact.html" data-page="contact.html">Get in Touch</a></li>
+      <li><a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener" class="github-btn">GitHub ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="wrap page-head">
+    <span class="eyebrow">Posts</span>
+    <h1>Notes from the field.</h1>
+    <p>Short write-ups on things I'm learning or building — a log of practical lessons, not polished tutorials.</p>
+  </div>
+
+  <section class="wrap">
+    <div class="grid-3" id="posts-grid">
+      <div class="card" style="grid-column:1/-1; text-align:center; padding:56px 24px;">
+        <p class="eyebrow" style="justify-content:center;">Loading</p>
+        <h3 style="margin-top:14px; font-size:20px;">Fetching posts…</h3>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 Thandazani Dlamini. Built from scratch.</p>
+    <div class="footer-links">
+      <a href="contact.html">Get in Touch</a>
+      <a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+function esc(s){ return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+PortfolioDB.posts.list(items => {
+  const grid = document.getElementById('posts-grid');
+  if (!items.length) {
+    grid.innerHTML = `
+      <div class="card" style="grid-column:1/-1; text-align:center; padding:56px 24px;">
+        <p class="eyebrow" style="justify-content:center;">Coming soon</p>
+        <h3 style="margin-top:14px; font-size:20px;">No posts yet</h3>
+        <p style="color:var(--muted); margin-top:10px; max-width:52ch; margin-left:auto; margin-right:auto;">I'll add notes and write-ups here as I go. Check back soon.</p>
+      </div>`;
+    return;
+  }
+  grid.innerHTML = items.map(p => `
+    <article class="card post-card">
+      <span class="post-date mono">${esc(p.date || 'Draft')}</span>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.excerpt)}</p>
+      <a href="${esc(p.link || '#')}" class="read-more">Read more →</a>
+    </article>`).join('');
+});
+</script>
+</body>
+</html>
