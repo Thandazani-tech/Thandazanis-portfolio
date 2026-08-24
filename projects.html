@@ -28,6 +28,7 @@
       <li><a href="projects.html" data-page="projects.html">Projects</a></li>
       <li><a href="skills.html" data-page="skills.html">Skills</a></li>
       <li><a href="posts.html" data-page="posts.html">Posts</a></li>
+      <li><a href="certifications.html" data-page="certifications.html">Certifications</a></li>
       <li><a href="contact.html" data-page="contact.html">Get in Touch</a></li>
       <li><a href="https://github.com/Thandazani-tech" target="_blank" rel="noopener" class="github-btn">GitHub ↗</a></li>
     </ul>
@@ -44,8 +45,9 @@
   <section class="wrap">
     <div class="grid-3" id="projects-grid">
       <div class="card" style="grid-column:1/-1; text-align:center; padding:56px 24px;">
-        <p class="eyebrow" style="justify-content:center;">Loading</p>
-        <h3 style="margin-top:14px; font-size:20px;">Fetching projects…</h3>
+        <p class="eyebrow" style="justify-content:center;">Coming soon</p>
+        <h3 style="margin-top:14px; font-size:20px;">No projects uploaded yet</h3>
+        <p style="color:var(--muted); margin-top:10px; max-width:52ch; margin-left:auto; margin-right:auto;">Projects go here as I finish and upload them. Check back soon.</p>
       </div>
     </div>
   </section>
@@ -67,15 +69,7 @@ function esc(s){ return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;
 
 PortfolioDB.projects.list(items => {
   const grid = document.getElementById('projects-grid');
-  if (!items.length) {
-    grid.innerHTML = `
-      <div class="card" style="grid-column:1/-1; text-align:center; padding:56px 24px;">
-        <p class="eyebrow" style="justify-content:center;">Coming soon</p>
-        <h3 style="margin-top:14px; font-size:20px;">No projects uploaded yet</h3>
-        <p style="color:var(--muted); margin-top:10px; max-width:52ch; margin-left:auto; margin-right:auto;">Projects go here as I finish and upload them. Check back soon.</p>
-      </div>`;
-    return;
-  }
+  if (!items.length) return; // keep the static empty state already in the HTML
   grid.innerHTML = items.map(p => {
     const tags = (p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
     const links = [];
